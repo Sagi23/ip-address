@@ -18,48 +18,52 @@ const populate = (a, b, c, d) => {
   ispArea.append(d);
 };
 
-const reset = (a, b, c, d, e, f) => {
+const reset = (a, b, c, d) => {
   a.textContent = "";
   b.textContent = "";
   c.textContent = "";
   d.textContent = "";
-  e.textContent = "";
-  f.textContent = "";
 };
 
 mymap = L.map("mapid").setView([32.2492, 34.8419], 11);
 
 const getIp = async (ip) => {
-  const res = await axios.get(
-    `https://geo.ipify.org/api/v1?apiKey=at_V3May5MNSZszx9uMLaFyA2M8r0eQp&ipAddress=${ip}`
-  );
-  ipAddress = res.data.ip;
-  loc = `${res.data.location.city}, ${res.data.location.region} ${res.data.location.postalCode}`;
-  timezone = `UTC ${res.data.location.timezone}`;
-  isp = res.data.isp;
-  lat = res.data.location.lat;
-  lng = res.data.location.lng;
-  populate(ipAddress, loc, timezone, isp);
-  L.tileLayer(
-    `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`,
-    {
-      attribution:
-        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: "mapbox/streets-v11",
-      tileSize: 512,
-      zoomOffset: -1,
-      center: [lat, lng],
-      accessToken:
-        "pk.eyJ1Ijoic2FnaXR3aWciLCJhIjoiY2tpNzdyZjBhMDl2ejJycDJsMXg0Nnc0NyJ9.I2erlDtS2QRMYMhA_hytBQ",
-    }
-  ).addTo(mymap);
-  var marker = L.marker([lat, lng]).addTo(mymap);
-  marker.bindPopup(ipAddress).openPopup();
+  try {
+    const res = await axios.get(
+      `https://geo.ipify.org/api/v1?apiKey=at_V3May5MNSZszx9uMLaFyA2M8r0eQp&ipAddress=${ip}`
+    );
+    ipAddress = res.data.ip;
+    loc = `${res.data.location.city}, ${res.data.location.region} ${res.data.location.postalCode}`;
+    timezone = `UTC ${res.data.location.timezone}`;
+    isp = res.data.isp;
+    lat = res.data.location.lat;
+    lng = res.data.location.lng;
+    populate(ipAddress, loc, timezone, isp);
+    L.tileLayer(
+      `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`,
+      {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: "mapbox/streets-v11",
+        tileSize: 512,
+        zoomOffset: -1,
+        center: [lat, lng],
+        accessToken:
+          "pk.eyJ1Ijoic2FnaXR3aWciLCJhIjoiY2tpNzdyZjBhMDl2ejJycDJsMXg0Nnc0NyJ9.I2erlDtS2QRMYMhA_hytBQ",
+      }
+    ).addTo(mymap);
+    var marker = L.marker([lat, lng]).addTo(mymap);
+    marker.bindPopup(ipAddress).openPopup();
+  } catch {
+    alert(
+      "somthing went wrong please make sure you enter a valid input and using chrome"
+    );
+  }
 };
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   getIp(ipEntry.value);
-  reset(ipArea, locArea, tzArea, ispArea, lat, lng);
+  reset(ipArea, locArea, tzArea, ispArea);
 });
