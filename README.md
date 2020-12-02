@@ -26,3 +26,5 @@ Improved docs reading.
 Improved AJAX skills.
 
 ### The site:
+
+https://ip-tracker-site.netlify.app/
