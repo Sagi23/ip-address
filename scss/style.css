@@ -172,6 +172,12 @@ header form button:hover {
     border-right: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.144);
   }
+  .result-area .div .sub-head {
+    font-size: 14px;
+  }
+  .result-area .div .head {
+    font-size: 12px;
+  }
   #mapid {
     height: 100vh;
   }

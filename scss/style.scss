@@ -151,6 +151,12 @@ header {
     .div {
       border-right: none;
       border-bottom: 1px solid rgba(0, 0, 0, 0.144);
+      .sub-head {
+        font-size: 14px;
+      }
+      .head {
+        font-size: 12px;
+      }
     }
   }
   #mapid {
