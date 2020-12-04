@@ -71,7 +71,8 @@ header form button:hover {
       -ms-flex-align: start;
           align-items: start;
   gap: 1em;
-  position: relative;
+  position: absolute;
+  left: 12%;
   z-index: 999;
 }
 
@@ -105,42 +106,28 @@ header form button:hover {
 
 #mapid {
   z-index: auto;
-  height: 65vh;
-  margin-top: -8.9em;
+  height: calc(100vh - 257px);
   position: static;
-}
-
-footer {
-  position: fixed;
-  bottom: 10px;
-  margin-top: 1em;
-  font-size: 1.3rem;
-  width: 100%;
-  margin: 0 auto;
-}
-
-footer p {
-  text-align: center;
-}
-
-footer p a {
-  text-decoration: none;
-  color: blue;
 }
 
 @media (min-width: 1921px) {
   #mapid {
-    height: 76vh;
+    height: calc(100vh - 260px);
   }
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1500px) {
   header {
+    position: relative;
+    z-index: 999;
     background-size: 100% 100%;
   }
   header form input {
     font-size: 1rem;
     width: 98%;
+  }
+  #mapid {
+    height: 100vh;
   }
 }
 
@@ -158,6 +145,8 @@ footer p a {
 
 @media (max-width: 800px) {
   header {
+    position: relative;
+    z-index: 999;
     padding: 6em 3em;
     background-size: 100% 100%;
   }
@@ -172,16 +161,18 @@ footer p a {
     font-size: 0.7rem;
   }
   .result-area {
+    position: absolute;
+    left: 12%;
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
     margin-top: -3em;
+    width: 64%;
   }
   .result-area .div {
     border-right: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.144);
   }
   #mapid {
-    margin-top: -10em;
     height: 100vh;
   }
 }
