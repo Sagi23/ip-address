@@ -25,8 +25,6 @@ const reset = (a, b, c, d) => {
   d.textContent = "";
 };
 
-mymap = L.map("mapid").setView([32.2492, 34.8419], 11);
-
 const getIp = async (ip) => {
   try {
     const res = await axios.get(
@@ -39,25 +37,39 @@ const getIp = async (ip) => {
     lat = res.data.location.lat;
     lng = res.data.location.lng;
     populate(ipAddress, loc, timezone, isp);
-    L.tileLayer(
-      `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`,
-      {
-        attribution:
-          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: "mapbox/streets-v11",
-        tileSize: 512,
-        zoomOffset: -1,
-        center: [lat, lng],
-        accessToken:
-          "pk.eyJ1Ijoic2FnaXR3aWciLCJhIjoiY2tpNzdyZjBhMDl2ejJycDJsMXg0Nnc0NyJ9.I2erlDtS2QRMYMhA_hytBQ",
-      }
-    ).addTo(mymap);
-    var marker = L.marker([lat, lng]).addTo(mymap);
-    marker.bindPopup(ipAddress).openPopup();
+    if (mymap) {
+      mymap.remove();
+      mymap = await L.map("mapid").setView([lat, lng], 11);
+      L.tileLayer(
+        `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`,
+        {
+          id: "mapbox/streets-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken:
+            "pk.eyJ1Ijoic2FnaXR3aWciLCJhIjoiY2tpNzdyZjBhMDl2ejJycDJsMXg0Nnc0NyJ9.I2erlDtS2QRMYMhA_hytBQ",
+        }
+      ).addTo(mymap);
+      var marker = L.marker([lat, lng]).addTo(mymap);
+      marker.bindPopup(`${ipAddress} is here!`).openPopup();
+    } else {
+      mymap = await L.map("mapid").setView([lat, lng], 11);
+      L.tileLayer(
+        `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}`,
+        {
+          id: "mapbox/streets-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken:
+            "pk.eyJ1Ijoic2FnaXR3aWciLCJhIjoiY2tpNzdyZjBhMDl2ejJycDJsMXg0Nnc0NyJ9.I2erlDtS2QRMYMhA_hytBQ",
+        }
+      ).addTo(mymap);
+      var marker = L.marker([lat, lng]).addTo(mymap);
+      marker.bindPopup(`${ipAddress} is here!`).openPopup();
+    }
   } catch {
     alert(
-      "somthing went wrong please make sure you enter a valid input and using chrome"
+      "somthing went wrong please make sure you enter a valid input and using chrome broweser"
     );
   }
 };
